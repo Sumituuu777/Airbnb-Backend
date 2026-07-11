@@ -1,6 +1,6 @@
 <%- include('../partials/head') %>
 
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-900 min-h-screen flex flex-col">
 
     <%- include('../partials/nav') %>
 
@@ -9,14 +9,17 @@
     
 
         <form action="/forgot-password" method="post"
-              class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6">
+              class=" bg-white/10
+                    backdrop-blur-2xl
+                    shadow-[0_20px_60px_rgba(0,0,0,0.45)]
+                    border border-white/20 rounded-xl p-8 w-full max-w-md space-y-6">
 
-            <h2 class="text-2xl font-bold text-blue-600 text-center">
+            <h2 class="text-3xl font-bold text-blue-600 text-center">
                 Forgot Password
             </h2>
 
             <% if(typeof errorMessages !=='undefined' && errorMessages){ %>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mr-5"
+            <div class="bg-white/5 border border-red-400 text-red-700 px-4 py-3 rounded relative mr-5"
             role="alert">
                 <span class="block sm:inline"><%=errorMessages%></span>
             </div>
@@ -26,14 +29,20 @@
                 type="input" 
                 name="email" 
                 placeholder="Enter registered Email"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                class="w-full px-4 py-2  bg-white/10
+                        border border-white/20
+                        text-white
+                        placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             >
             
             <!-- Submit Button -->
             <input 
                 type="submit" 
                 value="Send OTP"
-                class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-200 cursor-pointer"
+                class="w-full bg-red-500 text-white hover:shadow-red-500/40
+                         transition-all
+                         shadow-lg
+                        duration-300 py-3 rounded-lg font-semibold hover:bg-red-600 cursor-pointer"
             >
 
         </form>

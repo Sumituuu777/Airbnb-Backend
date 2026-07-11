@@ -121,7 +121,7 @@ exports.postlogin= async (req,res,next)=>{
         req.session.save(err => {
             if (err) console.log(err);
         });
-        if(user.userType==='guest'){  res.redirect('/availablehomes');}
+        if(user.userType==='guest'){  res.redirect('/');}
         else{ res.redirect('/host/host-homes')}
     }
     catch(err){
