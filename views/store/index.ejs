@@ -58,22 +58,6 @@
             <!-- ================= FEATURED HOMES ================= -->
 
             <section id="homes" class="relative z-20 max-w-7xl mx-auto px-8 -mt-28 pb-20">
-<!-- 
-                <div class="flex justify-between items-center mb-12">
-
-                    <div>
-
-                        <h2 class="text-4xl font-bold">
-                            Explore Top Stays
-                        </h2>
-
-                        <p class="text-gray-400 mt-2">
-                            Handpicked homes for your next vacation.
-                        </p>
-
-                    </div>
-
-                </div> -->
 
 
                 <!-- Cards -->
@@ -91,50 +75,14 @@
                                 backdrop-blur-xl
                                 border border-white/10
                                 shadow-2xl
-                                hover:-translate-y-3
+                                hover:-translate-y-1
                                 hover:border-red-400/40
                                 transition-all duration-500">
 
                                 <img src="<%= home.image || home.photoURL || 'https://via.placeholder.com/500' %>"
-                                    alt="<%= home.houseName %>" class="w-full h-64 object-cover
-                                    group-hover:scale-110
-                                    transition duration-700">
+                                    alt="<%= home.houseName %>" class="w-full h-64 object-cover">
 
-                                <!-- Image Overlay -->
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
-                                </div>
-
-                                <!-- Favorite Button -->
-
-                                <% if(isLoggedIn){ %>
-
-                                    <form action="/favorites" method="POST">
-
-                                        <input type="hidden" name="homeId" value="<%= home._id %>">
-
-                                        <button type="submit" class="absolute top-4 right-4
-                                            w-11 h-11
-                                            rounded-full
-                                            bg-white/20
-                                            backdrop-blur-xl
-                                            border border-white/20
-                                            hover:bg-red-500
-                                            hover:scale-110
-                                            transition-all
-                                            duration-300
-                                            flex
-                                            items-center
-                                            justify-center">
-
-                                            ❤️
-
-                                        </button>
-
-                                    </form>
-
-                                    <% } %>
+                                    <%-include('../partials/favorites',{home:home})%>
                                         <!-- Card Content -->
 
                                         <div class="p-6">
@@ -222,15 +170,12 @@
                                                 font-medium
                                                 shadow-lg
                                                 transition-all
-                                                duration-300">
+                                                duration-300
+                                                cursor-pointer">
 
                                                     View Details
 
                                                 </a>
-
-
-
-
 
                                                 <% if(isLoggedIn){ %>
 
