@@ -11,6 +11,7 @@ const homeSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true
-    }
+    },
+    isBooked:{type:Boolean,required:false}
 });
 module.exports=mongoose.model('Home',homeSchema)
