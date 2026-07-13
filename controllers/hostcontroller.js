@@ -1,5 +1,6 @@
 const Home=require('../Models/home')
-
+const fs=require("fs")
+const cloudinary =require('../config/cloudinary');
 
 exports.getHostHomes=(req,res,next)=>{
     const userId=req.session.user._id;
@@ -27,22 +28,21 @@ exports.getAddhome=(req,res,next)=>{
 };
 
 
-exports.postAddhome=(req,res,next)=>{
+exports.postAddhome=async(req,res,next)=>{
     const{houseName,price,location,rating,description}=req.body;
     
+    const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "Stay",
+    });
 
-// ye slash add karna bhaut important hai
-// warna photo ka path hamesha tum jis page par ho waha ke aage se aaega,
-// jaise localhost/host/uploads/photo  --- host homes me dekhoge toh,
-// jaise localhost/home/uploads/photo  ---  home details me dekhoge toh,
-// toh HOME PAGE par hi apni photo dekhingi , hosthomes ,home-details me nhi isliye "/" add karo.
-    const photoURL="/"+req.file.path
+    fs.unlinkSync(req.file.path); // delete temporary file
+
     const newHome=new Home({
         houseName,
         price,
         location,
         rating,
-        photoURL,
+        photoURL:result.secure_url,
         description,
         hostId:req.session.user._id
     });
@@ -73,12 +73,21 @@ exports.getEdithome=(req,res,next)=>{
         console.log("ERROR in Post add home",err);  
     })
 };
-exports.postEdithome=(req,res,next)=>{
+
+
+exports.postEdithome=async (req,res,next)=>{
     const {id,houseName,price,location,rating,description}=req.body;
-    if(!req.file){
-        return res.status(400).send("No Image uploaded")
+    let imageUrl = null;
+
+    if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "Stay",
+        });
+
+        imageUrl = result.secure_url;
+
+        fs.unlinkSync(req.file.path);
     }
-    const photoURL= "/"+ req.file.path;
     Home.findById(id).then(existingHome=>{
         if(!existingHome){
             console.log("home not found in post edit function for editing");
@@ -88,8 +97,8 @@ exports.postEdithome=(req,res,next)=>{
         existingHome.price=price;
         existingHome.location=location
         existingHome.rating=rating;
-        if(req.file){
-            existingHome.photoURL=req.file.path;
+        if(imageUrl){
+            existingHome.photoURL=imageUrl;
         }
         existingHome.description=description;
         return existingHome.save()

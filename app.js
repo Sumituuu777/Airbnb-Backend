@@ -73,7 +73,6 @@ const fileFilter=(req,file,cb)=>{
 }
 
 app.use(multer({storage, fileFilter}).single('photo'))
-app.use('/uploads',express.static(path.join(rootdir,"uploads")))
 
 
 //  local middleware starting
