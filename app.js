@@ -25,13 +25,13 @@ app.set('views','views');
 
 // url me halka sa change karna hai ast me '?appname=airbnb' ki jagah khali 'airbnb' likhna hai fir airbnb naam ka database ban jaaega 
 const url=`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@airbnb.c30s2fi.mongodb.net/airbnb`
-
+const PORT;
 mongoose.connect(url)
 .then(()=>{
     console.log("connected to mongodb");
     const server=http.createServer(app);
-    server.listen(3053,()=>{
-    console.log('server running at http://localhost:3053/');
+    server.listen(PORT,()=>{
+    console.log(`server running at http://localhost:${PORT}/`);
     })
 })
 .catch((err)=>{
